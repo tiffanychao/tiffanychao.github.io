@@ -6,13 +6,20 @@
   
   <title>Tiffany&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta property="og:type" content="website">
+  <meta name="description" content="Security and Permission設定權限是為了保障資料庫的安全性,不同使用者有不同的登入帳號及權限,可以防止過大權限而竄改到他人資料等  一些常見專有名詞  securable:需要被保護的物件,eg. Server,DB… principal:主體，安全身分辨識的一種方式,想成是登入帳號 permission:權限,principal可以對securable執行的動作   進到資料">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Tiffany&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/2021/11/23/db2/index.html">
 <meta property="og:site_name" content="Tiffany&#39;s Blog">
+<meta property="og:description" content="Security and Permission設定權限是為了保障資料庫的安全性,不同使用者有不同的登入帳號及權限,可以防止過大權限而竄改到他人資料等  一些常見專有名詞  securable:需要被保護的物件,eg. Server,DB… principal:主體，安全身分辨識的一種方式,想成是登入帳號 permission:權限,principal可以對securable執行的動作   進到資料">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/qlkeuBk.png">
+<meta property="og:image" content="https://i.imgur.com/S89EJrY.png">
+<meta property="article:published_time" content="2021-11-24T04:02:51.193Z">
+<meta property="article:modified_time" content="2021-11-24T04:10:17.026Z">
 <meta property="article:author" content="Tiffany Chao">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/qlkeuBk.png">
   
     <link rel="alternate" href="/atom.xml" title="Tiffany's Blog" type="application/atom+xml">
   
@@ -69,9 +76,7 @@
 </header>
 
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-db2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+        <section id="main"><article id="post-db2" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/2021/11/23/db2/" class="article-date">
   <time class="dt-published" datetime="2021-11-24T04:02:51.193Z" itemprop="datePublished">2021-11-23</time>
@@ -167,250 +172,19 @@
     </footer>
   </div>
   
-</article>
-
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-db1" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/08/09/db1/" class="article-date">
-  <time class="dt-published" datetime="2021-08-09T14:25:06.118Z" itemprop="datePublished">2021-08-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/09/db1/">Database basics</a>
-    </h1>
+    <a href="/2021/08/09/db1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Database basics</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <h2 id="Basic-composition-and-Data-Type"><a href="#Basic-composition-and-Data-Type" class="headerlink" title="Basic composition and Data Type"></a>Basic composition and Data Type</h2><h3 id="Basic-composition"><a href="#Basic-composition" class="headerlink" title="Basic composition"></a>Basic composition</h3><ul>
-<li>基本組成:資料會存放在Table<br><img src="https://i.imgur.com/GVWVomS.png"></li>
-<li>Table的存儲單位為Page(8kb),而一次extent則由八個Page組成</li>
-</ul>
-<p><img src="https://i.imgur.com/xl0iPGu.png"></p>
-<blockquote>
-<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-tw/sql/relational-databases/pages-and-extents-architecture-guide?view=sql-server-ver15">https://docs.microsoft.com/zh-tw/sql/relational-databases/pages-and-extents-architecture-guide?view=sql-server-ver15</a></p>
-</blockquote>
-<ul>
-<li>檢視所有table<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> INFORMATION_SCHEMA.TABLES <span class="keyword">WHERE</span> TABLE_TYPE<span class="operator">=</span><span class="string">&#x27;BASE TABLE&#x27;</span></span><br></pre></td></tr></table></figure>
-<h3 id="Data-Type"><a href="#Data-Type" class="headerlink" title="Data Type"></a>Data Type</h3></li>
-</ul>
-<p><strong>1. Numerical(精確數值)</strong></p>
-<table>
-<thead>
-<tr>
-<th>Data Type</th>
-<th>Description</th>
-<th>Byte</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>BIGINT</td>
-<td>-9,223,372,036,854,775,808~9,223,372,036,854,775,807</td>
-<td>8</td>
-</tr>
-<tr>
-<td>INT</td>
-<td>-2,147,483,648~2147483647</td>
-<td>4</td>
-</tr>
-<tr>
-<td>SMALLINT</td>
-<td>-32768~32767</td>
-<td>2</td>
-</tr>
-<tr>
-<td>TINYINT</td>
-<td>0~255(+)</td>
-<td>1</td>
-</tr>
-<tr>
-<td>BIT</td>
-<td>0,1</td>
-<td>1/8</td>
-</tr>
-<tr>
-<td>DECIMAL(p,s)</td>
-<td>p:有效位數 s:小數點,  會保存小數尾數零</td>
-<td>5~17</td>
-</tr>
-<tr>
-<td>NUMERIC(p,s)</td>
-<td>p:有效位數 s:小數點,功能上和decimal一樣</td>
-<td>5~17</td>
-</tr>
-</tbody></table>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">eg. number=9999.99</span><br><span class="line">    decimal(3,2) → 9.99</span><br><span class="line">    decimal(5,2) → 999.99  </span><br></pre></td></tr></table></figure>
-<p><strong>2. Approximate(近似數值)</strong></p>
-<table>
-<thead>
-<tr>
-<th>Data Type</th>
-<th>Description</th>
-<th>Byte</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>REAL</td>
-<td>- 3.40E+38~ -1.18E-38,0,1.18E-38~3.40E+38</td>
-<td>4</td>
-</tr>
-<tr>
-<td>FLOAT (n)</td>
-<td>1.79E+308~ -2.23E-308,0,2.23E-308~1.79E+308</td>
-<td>n</td>
-</tr>
-</tbody></table>
-<p><strong>3. Date(時間): 最主要的差別就是儲存時間的精細度、起訖範圍不同</strong></p>
-<table>
-<thead>
-<tr>
-<th>Data Type</th>
-<th>Description</th>
-<th>Byte</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>datetime</td>
-<td>YYYY-MM-DD hh:mm:ss[.nnn]</td>
-<td>8</td>
-</tr>
-<tr>
-<td>datetime2</td>
-<td>YYYY-MM-DD hh:mm:ss[.nnnnnnn]</td>
-<td>6~8</td>
-</tr>
-<tr>
-<td>smalldatetime</td>
-<td>YYYY-MM-DD hh:mm:ss</td>
-<td>4</td>
-</tr>
-</tbody></table>
-<p><strong>4. Char and String(字元和字串)</strong></p>
-<p>String是由char所組成,其主要型態可以區分為固定的字元或長度可變化的型態</p>
-<table>
-<thead>
-<tr>
-<th>Char length</th>
-<th>非unicode</th>
-<th>Unicode</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>固定</td>
-<td>char</td>
-<td>nchar</td>
-</tr>
-<tr>
-<td>變化</td>
-<td>varchar</td>
-<td>nvarchar</td>
-</tr>
-<tr>
-<td>當長度&gt;8000位元</td>
-<td>varchar(max)\text</td>
-<td>nvarchar(max)\ntext</td>
-</tr>
-</tbody></table>
-<p><strong>5. Boolean(二進位)</strong></p>
-<table>
-<thead>
-<tr>
-<th>Char length</th>
-<th>Data type</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>固定</td>
-<td>binary</td>
-</tr>
-<tr>
-<td>變化</td>
-<td>varbinary</td>
-</tr>
-<tr>
-<td>當長度&gt;8000位元</td>
-<td>varbinary(max)\image</td>
-</tr>
-</tbody></table>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/09/db1/" data-id="ckwd3g2d30001wjyads9i0l0e" data-title="Database basics" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-
-  
-    <article id="post-hello-world" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
-  <div class="article-meta">
-    <a href="/2021/08/09/hello-world/" class="article-date">
-  <time class="dt-published" datetime="2021-08-09T14:25:06.118Z" itemprop="datePublished">2021-08-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="p-name article-title" href="/2021/08/09/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="e-content article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://example.com/2021/08/09/hello-world/" data-id="ckwd3g2d90005wjyahbog2v44" data-title="Hello World" class="article-share-link">Share</a>
-      
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
 
 
 </section>
